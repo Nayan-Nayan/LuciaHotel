@@ -1,0 +1,592 @@
+{% extends 'allinclude.html' %}
+{% block title %}
+   Online Booking page
+{% endblock %}
+{% block contant %}
+{% load static %}
+
+<!-- Modern Hotel Header Banner -->
+<section class="hotel-showcase" style="margin-bottom: 50px;">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <div class="col-md-12">
+                <div class="showcase-banner" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url({% static 'Allfiles/Photo/slider-1.jpg' %}) no-repeat center center; background-size: cover; height: 400px; position: relative;">
+                    <div class="container h-100">
+                        <div class="row h-100 align-items-center">
+                            <div class="col-md-12">
+                                <div class="banner-content text-white text-center" style="padding: 30px;">
+                                    <h1 class="display-4 fw-bold mb-4" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Book Your Stay</h1>
+                                    <p class="lead mb-4">Simple, fast, and secure booking process</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Booking Process -->
+<section id="booking_process" class="py-5">
+    <div class="container">
+        <!-- Progress Steps -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="booking-steps d-flex justify-content-center">
+                    <div class="step-item active" id="step1-indicator">
+                        <div class="step-circle">1</div>
+                        <div class="step-title">Room Details</div>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step-item" id="step2-indicator">
+                        <div class="step-circle">2</div>
+                        <div class="step-title">Your Details</div>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step-item" id="step3-indicator">
+                        <div class="step-circle">3</div>
+                        <div class="step-title">Payment</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Booking Form -->
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form method="POST" action="" enctype="multipart/form-data" id="bookingForm">
+                    {% csrf_token %}
+                    <input type="hidden" id="roomType" name="Room_Type" value="Deluxe Room">
+                    
+                    <!-- Step 1: Room Details (Auto-selected) -->
+                    <div class="booking-step card shadow" id="step1">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0">Room Details</h4>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row mb-4">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body d-flex">
+                                            <div class="room-image me-3" style="width: 150px; height: 100px; background: url({% static 'Allfiles/Photo/room-1.jpg' %}) no-repeat center center; background-size: cover;"></div>
+                                            <div>
+                                                <h5 class="card-title">Deluxe Room</h5>
+                                                <p class="card-text mb-1"><small>King-size bed, City view, Free Wi-Fi</small></p>
+                                                <p class="card-text text-primary mb-0"><strong>₹3,500</strong> <small>per night</small></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="checkInDate" class="form-label">Check-in Date</label>
+                                    <input type="date" class="form-control" id="checkInDate" name="Check_in" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="checkOutDate" class="form-label">Check-out Date</label>
+                                    <input type="date" class="form-control" id="checkOutDate" name="Check_out" required>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="adults" class="form-label">Adults</label>
+                                    <select class="form-select" id="adults" name="ADULT">
+                                        <option value="1">1 Adult</option>
+                                        <option value="2" selected>2 Adults</option>
+                                        <option value="3">3 Adults</option>
+                                        <option value="4">4 Adults</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="children" class="form-label">Children</label>
+                                    <select class="form-select" id="children" name="CHILDREN">
+                                        <option value="0" selected>0 Children</option>
+                                        <option value="1">1 Child</option>
+                                        <option value="2">2 Children</option>
+                                        <option value="3">3 Children</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="booking-summary mt-4">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h5>Booking Summary</h5>
+                                                <p class="mb-0">Total for <span id="total-nights">1</span> night(s): <strong>₹<span id="total-price">3500</span></strong></p>
+                                            </div>
+                                            <button type="button" id="continue-to-details" class="btn btn-primary">Continue</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2: Your Details -->
+                    <div class="booking-step card shadow mt-4" id="step2" style="display: none;">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0">Your Details</h4>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="name" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="name" name="Name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="surname" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="surname" name="Surname" required>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="Email" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phone" name="Phone_Number" required>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="city" class="form-label">City</label>
+                                    <input type="text" class="form-control" id="city" name="City" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="country" class="form-label">Country</label>
+                                    <input type="text" class="form-control" id="country" name="Country" required>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <label for="address" class="form-label">Address</label>
+                                    <textarea class="form-control" id="address" name="Address" rows="2" required></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="nidNo" class="form-label">ID Number</label>
+                                    <input type="text" class="form-control" id="nidNo" name="Nid_No" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="img" class="form-label">Upload ID Proof</label>
+                                    <input type="file" class="form-control" id="img" name="Img" required>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between mt-3">
+                                <button type="button" id="back-to-availability" class="btn btn-outline-secondary">Back</button>
+                                <button type="button" id="continue-to-payment" class="btn btn-primary">Continue to Payment</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3: Payment (Initial View) -->
+                    <div class="booking-step card shadow mt-4" id="step3" style="display: none;">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0">Payment</h4>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="booking-summary mb-4">
+                                <h5>Booking Summary</h5>
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <p><strong>Room:</strong> Deluxe Room</p>
+                                        <p><strong>Dates:</strong> <span id="summary-dates">Jun 15, 2023 - Jun 16, 2023</span></p>
+                                        <p><strong>Guests:</strong> <span id="summary-guests">2 Adults, 0 Children</span></p>
+                                        <p class="mb-0"><strong>Total:</strong> ₹<span id="summary-price">3500</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <button type="button" id="proceed-to-payment-page" class="btn btn-success btn-lg">Proceed to Payment</button>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" id="back-to-details" class="btn btn-outline-secondary">Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Payment Page Modal -->
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title" id="paymentModalLabel">Secure Payment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="payment-page">
+                    <div class="row mb-4">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header bg-white">
+                                    <h5 class="mb-0">Payment Method</h5>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="nav nav-tabs" id="paymentTabs" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="card-tab" data-bs-toggle="tab" data-bs-target="#card-tab-pane" type="button" role="tab" aria-controls="card-tab-pane" aria-selected="true">Credit/Debit Card</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="upi-tab" data-bs-toggle="tab" data-bs-target="#upi-tab-pane" type="button" role="tab" aria-controls="upi-tab-pane" aria-selected="false">UPI</button>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content pt-3" id="paymentTabsContent">
+                                        <div class="tab-pane fade show active" id="card-tab-pane" role="tabpanel" aria-labelledby="card-tab" tabindex="0">
+                                            <div class="card-payment-form">
+                                                <div class="mb-3">
+                                                    <label for="cardNumber" class="form-label">Card Number</label>
+                                                    <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="expiryDate" class="form-label">Expiry Date</label>
+                                                        <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="cvv" class="form-label">CVV</label>
+                                                        <input type="text" class="form-control" id="cvv" placeholder="123">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="cardholderName" class="form-label">Cardholder Name</label>
+                                                    <input type="text" class="form-control" id="cardholderName" placeholder="John Doe">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="upi-tab-pane" role="tabpanel" aria-labelledby="upi-tab" tabindex="0">
+                                            <div class="upi-payment-form">
+                                                <div class="mb-3">
+                                                    <label for="upiId" class="form-label">UPI ID</label>
+                                                    <input type="text" class="form-control" id="upiId" placeholder="Enter your UPI ID">
+                                                </div>
+                                                <div class="text-center mt-4">
+                                                    <p>Please enter your UPI ID to proceed with payment</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header bg-white">
+                                    <h5 class="mb-0">Order Summary</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Room:</strong> Deluxe Room</p>
+                                    <p><strong>Dates:</strong> <span id="modal-summary-dates">Jun 15, 2023 - Jun 16, 2023</span></p>
+                                    <p><strong>Guests:</strong> <span id="modal-summary-guests">2 Adults, 0 Children</span></p>
+                                    <hr>
+                                    <div class="d-flex justify-content-between">
+                                        <span><strong>Total:</strong></span>
+                                        <span><strong>₹<span id="modal-summary-price">3500</span></strong></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <button type="button" id="make-payment" class="btn btn-success btn-lg">Pay Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Processing Payment View (Initially Hidden) -->
+                <div class="processing-payment text-center py-5" style="display: none;">
+                    <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <h4>Processing Payment</h4>
+                    <p>Please do not close this window...</p>
+                </div>
+                
+                <!-- Payment Success View (Initially Hidden) -->
+                <div class="payment-success text-center py-5" style="display: none;">
+                    <div class="success-icon mb-3">
+                        <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
+                    </div>
+                    <h4>Payment Successful!</h4>
+                    <p>Your booking has been confirmed.</p>
+                    <p>Booking Reference: <strong id="booking-reference">BK12345678</strong></p>
+                    <p>A confirmation email has been sent to your email address.</p>
+                    <button type="button" id="return-to-booking" class="btn btn-primary mt-3">Return to Booking Page</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Styles for the booking steps -->
+<style>
+    .booking-steps {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 2rem;
+    }
+    
+    .step-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .step-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #e9ecef;
+        color: #6c757d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-bottom: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .step-title {
+        font-size: 14px;
+        color: #6c757d;
+        transition: all 0.3s ease;
+    }
+    
+    .step-connector {
+        height: 3px;
+        background-color: #e9ecef;
+        width: 100px;
+        margin: 0 15px;
+        position: relative;
+        top: -20px;
+    }
+    
+    .step-item.active .step-circle {
+        background-color: #0d6efd;
+        color: white;
+    }
+    
+    .step-item.active .step-title {
+        color: #0d6efd;
+        font-weight: 600;
+    }
+    
+    .booking-step {
+        transition: all 0.3s ease;
+    }
+    
+    /* Payment page styles */
+    .payment-page {
+        min-height: 400px;
+    }
+    
+    .nav-tabs .nav-link {
+        color: #495057;
+    }
+    
+    .nav-tabs .nav-link.active {
+        font-weight: 600;
+    }
+</style>
+
+<!-- JavaScript for the booking process -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set minimum dates for check-in and check-out
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        
+        const formatDate = date => {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        };
+        
+        document.getElementById('checkInDate').min = formatDate(today);
+        document.getElementById('checkOutDate').min = formatDate(tomorrow);
+        
+        // Set default dates
+        document.getElementById('checkInDate').value = formatDate(today);
+        document.getElementById('checkOutDate').value = formatDate(tomorrow);
+        
+        // Room price
+        const roomPrice = 3500; // Deluxe Room price
+        
+        // Update booking summary on date change
+        function updateBookingSummary() {
+            const checkInDate = new Date(document.getElementById('checkInDate').value);
+            const checkOutDate = new Date(document.getElementById('checkOutDate').value);
+            
+            // Calculate nights
+            const timeDiff = checkOutDate.getTime() - checkInDate.getTime();
+            const nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
+            
+            if (nights <= 0) {
+                alert('Check-out date must be after check-in date');
+                return;
+            }
+            
+            // Update summary
+            document.getElementById('total-nights').textContent = nights;
+            document.getElementById('total-price').textContent = roomPrice * nights;
+            
+            // Format dates for display
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            const formattedCheckIn = checkInDate.toLocaleDateString('en-US', options);
+            const formattedCheckOut = checkOutDate.toLocaleDateString('en-US', options);
+            
+            // Update dates in summary
+            document.getElementById('summary-dates').textContent = `${formattedCheckIn} - ${formattedCheckOut}`;
+            document.getElementById('modal-summary-dates').textContent = `${formattedCheckIn} - ${formattedCheckOut}`;
+            
+            // Update price in modal
+            document.getElementById('summary-price').textContent = roomPrice * nights;
+            document.getElementById('modal-summary-price').textContent = roomPrice * nights;
+        }
+        
+        // Initialize booking summary
+        updateBookingSummary();
+        
+        // Update summary when dates change
+        document.getElementById('checkInDate').addEventListener('change', updateBookingSummary);
+        document.getElementById('checkOutDate').addEventListener('change', updateBookingSummary);
+        
+        // Update guests summary when selections change
+        function updateGuestsSummary() {
+            const adults = document.getElementById('adults').value;
+            const children = document.getElementById('children').value;
+            const guestsSummary = `${adults} Adult${adults > 1 ? 's' : ''}, ${children} Child${children != 1 ? 'ren' : ''}`;
+            
+            document.getElementById('summary-guests').textContent = guestsSummary;
+            document.getElementById('modal-summary-guests').textContent = guestsSummary;
+        }
+        
+        // Initialize guests summary
+        updateGuestsSummary();
+        
+        // Update guests summary when selections change
+        document.getElementById('adults').addEventListener('change', updateGuestsSummary);
+        document.getElementById('children').addEventListener('change', updateGuestsSummary);
+        
+        // Continue to Step 2
+        document.getElementById('continue-to-details').addEventListener('click', function() {
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+            document.getElementById('step1-indicator').classList.remove('active');
+            document.getElementById('step2-indicator').classList.add('active');
+        });
+        
+        // Back to Step 1
+        document.getElementById('back-to-availability').addEventListener('click', function() {
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step1').style.display = 'block';
+            document.getElementById('step2-indicator').classList.remove('active');
+            document.getElementById('step1-indicator').classList.add('active');
+        });
+        
+        // Continue to Step 3
+        document.getElementById('continue-to-payment').addEventListener('click', function() {
+            // Validate personal details
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            
+            if (!name || !email || !phone) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step3').style.display = 'block';
+            document.getElementById('step2-indicator').classList.remove('active');
+            document.getElementById('step3-indicator').classList.add('active');
+        });
+        
+        // Back to Step 2
+        document.getElementById('back-to-details').addEventListener('click', function() {
+            document.getElementById('step3').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+            document.getElementById('step3-indicator').classList.remove('active');
+            document.getElementById('step2-indicator').classList.add('active');
+        });
+        
+        // Initialize payment modal
+        const paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+        
+        // Open payment modal
+        document.getElementById('proceed-to-payment-page').addEventListener('click', function() {
+            // Show payment page, hide processing and success views
+            document.querySelector('.payment-page').style.display = 'block';
+            document.querySelector('.processing-payment').style.display = 'none';
+            document.querySelector('.payment-success').style.display = 'none';
+            
+            // Generate random booking reference
+            const bookingRef = 'BK' + Math.floor(10000000 + Math.random() * 90000000);
+            document.getElementById('booking-reference').textContent = bookingRef;
+            
+            paymentModal.show();
+        });
+        
+        // Process payment
+        document.getElementById('make-payment').addEventListener('click', function() {
+            // Hide payment form, show processing
+            document.querySelector('.payment-page').style.display = 'none';
+            document.querySelector('.processing-payment').style.display = 'block';
+            
+            // Simulate payment processing (1 second)
+            setTimeout(function() {
+                // Hide processing, show success
+                document.querySelector('.processing-payment').style.display = 'none';
+                document.querySelector('.payment-success').style.display = 'block';
+            }, 1000);
+        });
+        
+        // Return to booking page
+        document.getElementById('return-to-booking').addEventListener('click', function() {
+            paymentModal.hide();
+            
+            // Reset form and go back to step 1
+            document.getElementById('step3').style.display = 'none';
+            document.getElementById('step1').style.display = 'block';
+            document.getElementById('step3-indicator').classList.remove('active');
+            document.getElementById('step1-indicator').classList.add('active');
+            
+            // Reset form fields
+            document.getElementById('bookingForm').reset();
+            
+            // Set default dates again
+            document.getElementById('checkInDate').value = formatDate(today);
+            document.getElementById('checkOutDate').value = formatDate(tomorrow);
+            
+            // Update booking summary
+            updateBookingSummary();
+            updateGuestsSummary();
+        });
+    });
+</script>
+{% endblock %}

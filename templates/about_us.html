@@ -1,0 +1,35 @@
+{% extends 'allinclude.html' %}
+{% load static %}
+
+{% block title %}About Us - Lucia Hotel & Resort{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section" style="background-image: url('{% static "Allfiles/Photo/slider-5.jpg" %}'); background-size: cover; background-position: center; height: 400px; position: relative;">
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);"></div>
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="display-4 text-white font-weight-bold">Lucia</h1>
+                <h2 class="display-5 text-white font-weight-bold">Hotel & Resort</h2>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <p class="lead">
+                Welcome to Hotel Booking Management, your one-stop solution for hassle-free hotel reservations. 
+                Quickly find the perfect hotel for your next stay. Use our search tool to browse and book hotels in the area. 
+                Make sure to drop a feedback. Thank You. See you again.
+            </p>
+            <div class="mt-4">
+                <a href="{% url 'contact_us' %}" class="btn btn-primary">Contact Us</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

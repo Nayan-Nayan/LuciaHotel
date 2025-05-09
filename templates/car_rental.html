@@ -1,0 +1,386 @@
+{% extends 'allinclude.html' %}
+{% load static %}
+
+{% block title %}Rent a Car - Lucia Hotel & Resort{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section" style="background-image: url('{% static "Allfiles/Photo/slider-3.jpg" %}'); background-size: cover; background-position: center; height: 400px; position: relative;">
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);"></div>
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="display-4 text-white font-weight-bold">Rent a Car</h1>
+                <p class="lead text-white">Find the perfect vehicle for your journey</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Search and Filter Section -->
+<div class="container my-5">
+    <div class="card shadow-sm mb-5">
+        <div class="card-body p-4">
+            <form id="carSearchForm">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label for="pickupDate"><i class="fas fa-calendar-alt text-primary mr-2"></i> Pick-up Date</label>
+                        <input type="date" class="form-control" id="pickupDate" required>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="returnDate"><i class="fas fa-calendar-alt text-primary mr-2"></i> Return Date</label>
+                        <input type="date" class="form-control" id="returnDate" required>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="carType"><i class="fas fa-car text-primary mr-2"></i> Car Type</label>
+                        <select class="form-control" id="carType">
+                            <option value="">All Types</option>
+                            <option value="sedan">Sedan</option>
+                            <option value="suv">SUV</option>
+                            <option value="luxury">Luxury</option>
+                            <option value="compact">Compact</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-search mr-2"></i> Search Cars</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Car Listings -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="mb-4">Available Cars</h2>
+        </div>
+    </div>
+    
+    <div class="row" id="carListings">
+        <!-- Car Card 1 -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="{% static 'Allfiles/Photo/car-sedan.jpg' %}" class="card-img-top" alt="Sedan Car">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="card-title mb-0">Toyota Camry</h5>
+                        <span class="badge badge-primary">Sedan</span>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-user-friends text-muted mr-2"></i> 5 Seats</li>
+                        <li><i class="fas fa-suitcase text-muted mr-2"></i> 3 Luggage</li>
+                        <li><i class="fas fa-gas-pump text-muted mr-2"></i> Petrol</li>
+                        <li><i class="fas fa-cog text-muted mr-2"></i> Automatic</li>
+                    </ul>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <h5 class="text-primary mb-0">₹3,500/day</h5>
+                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#bookingModal" data-car="Toyota Camry" data-price="3500">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Car Card 2 -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="{% static 'Allfiles/Photo/car-suv.jpg' %}" class="card-img-top" alt="SUV Car">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="card-title mb-0">Honda CR-V</h5>
+                        <span class="badge badge-success">SUV</span>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-user-friends text-muted mr-2"></i> 7 Seats</li>
+                        <li><i class="fas fa-suitcase text-muted mr-2"></i> 5 Luggage</li>
+                        <li><i class="fas fa-gas-pump text-muted mr-2"></i> Diesel</li>
+                        <li><i class="fas fa-cog text-muted mr-2"></i> Automatic</li>
+                    </ul>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <h5 class="text-primary mb-0">₹5,000/day</h5>
+                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#bookingModal" data-car="Honda CR-V" data-price="5000">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Car Card 3 -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="{% static 'Allfiles/Photo/car-luxury.jpg' %}" class="card-img-top" alt="Luxury Car">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="card-title mb-0">Mercedes E-Class</h5>
+                        <span class="badge badge-danger">Luxury</span>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-user-friends text-muted mr-2"></i> 5 Seats</li>
+                        <li><i class="fas fa-suitcase text-muted mr-2"></i> 4 Luggage</li>
+                        <li><i class="fas fa-gas-pump text-muted mr-2"></i> Petrol</li>
+                        <li><i class="fas fa-cog text-muted mr-2"></i> Automatic</li>
+                    </ul>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <h5 class="text-primary mb-0">₹8,000/day</h5>
+                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#bookingModal" data-car="Mercedes E-Class" data-price="8000">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- More Cars Section -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <button class="btn btn-outline-primary" id="loadMoreCars">Load More Cars</button>
+        </div>
+    </div>
+    
+    <!-- Features Section -->
+    <div class="row mb-5">
+        <div class="col-12 text-center mb-4">
+            <h2>Why Choose Our Car Rental Service</h2>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-car-side fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="card-title">Wide Selection</h5>
+                    <p class="card-text">Choose from our extensive fleet of vehicles ranging from economy to luxury cars.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-money-bill-wave fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="card-title">Best Price Guarantee</h5>
+                    <p class="card-text">We offer competitive rates with no hidden charges. Get the best value for your money.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-headset fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="card-title">24/7 Support</h5>
+                    <p class="card-text">Our customer support team is available round the clock to assist you with any queries.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Booking Modal -->
+<div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="bookingModalLabel">Book Your Car</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="carBookingForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="mb-3">Car Details</h6>
+                            <div class="form-group">
+                                <label>Selected Car</label>
+                                <input type="text" class="form-control" id="selectedCar" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Daily Rate</label>
+                                <input type="text" class="form-control" id="dailyRate" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Pick-up Date</label>
+                                <input type="date" class="form-control" id="modalPickupDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Return Date</label>
+                                <input type="date" class="form-control" id="modalReturnDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Driver Option</label>
+                                <select class="form-control" id="driverOption">
+                                    <option value="self">Self Drive</option>
+                                    <option value="with_driver">With Driver (+₹1,500/day)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="mb-3">Personal Details</h6>
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" class="form-control" id="customerName" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" class="form-control" id="customerEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" class="form-control" id="customerPhone" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Special Requests</label>
+                                <textarea class="form-control" id="specialRequests" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h6 class="mb-3">Booking Summary</h6>
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Car Rental</td>
+                                        <td id="rentalCost">₹0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Driver Charges</td>
+                                        <td id="driverCost">₹0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Insurance</td>
+                                        <td id="insuranceCost">₹1,000</td>
+                                    </tr>
+                                    <tr class="table-primary">
+                                        <th>Total Amount</th>
+                                        <th id="totalCost">₹1,000</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="confirmBooking">Confirm Booking</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="successModalLabel">Booking Successful</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
+                <h5>Your car has been booked successfully!</h5>
+                <p>A confirmation email has been sent to your email address. Your booking reference number is <strong id="bookingReference">CR-12345</strong>.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Car Rental Page -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set minimum dates for date pickers
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('pickupDate').setAttribute('min', today);
+        document.getElementById('returnDate').setAttribute('min', today);
+        document.getElementById('modalPickupDate').setAttribute('min', today);
+        document.getElementById('modalReturnDate').setAttribute('min', today);
+        
+        // Handle booking modal
+        $('#bookingModal').on('show.bs.modal', function (event) {
+            const button = $(event.relatedTarget);
+            const car = button.data('car');
+            const price = button.data('price');
+            
+            const modal = $(this);
+            modal.find('#selectedCar').val(car);
+            modal.find('#dailyRate').val('₹' + price + '/day');
+            
+            // Set pickup and return dates from search form if filled
+            const pickupDate = document.getElementById('pickupDate').value;
+            const returnDate = document.getElementById('returnDate').value;
+            
+            if (pickupDate) {
+                document.getElementById('modalPickupDate').value = pickupDate;
+            }
+            
+            if (returnDate) {
+                document.getElementById('modalReturnDate').value = returnDate;
+            }
+            
+            // Calculate initial costs
+            calculateCosts();
+        });
+        
+        // Calculate costs when dates or driver option changes
+        document.getElementById('modalPickupDate').addEventListener('change', calculateCosts);
+        document.getElementById('modalReturnDate').addEventListener('change', calculateCosts);
+        document.getElementById('driverOption').addEventListener('change', calculateCosts);
+        
+        // Calculate rental costs
+        function calculateCosts() {
+            const pickupDate = new Date(document.getElementById('modalPickupDate').value);
+            const returnDate = new Date(document.getElementById('modalReturnDate').value);
+            const dailyRate = parseInt(document.getElementById('dailyRate').value.replace(/[^0-9]/g, ''));
+            const driverOption = document.getElementById('driverOption').value;
+            
+            // Calculate days (add 1 because both pickup and return days are counted)
+            let days = 0;
+            if (!isNaN(pickupDate.getTime()) && !isNaN(returnDate.getTime())) {
+                const diffTime = Math.abs(returnDate - pickupDate);
+                days = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+            }
+            
+            // Calculate costs
+            const rentalCost = days * dailyRate;
+            const driverCost = (driverOption === 'with_driver') ? days * 1500 : 0;
+            const insuranceCost = 1000; // Fixed insurance cost
+            const totalCost = rentalCost + driverCost + insuranceCost;
+            
+            // Update the summary
+            document.getElementById('rentalCost').textContent = '₹' + rentalCost;
+            document.getElementById('driverCost').textContent = '₹' + driverCost;
+            document.getElementById('insuranceCost').textContent = '₹' + insuranceCost;
+            document.getElementById('totalCost').textContent = '₹' + totalCost;
+        }
+        
+        // Handle booking confirmation
+        document.getElementById('confirmBooking').addEventListener('click', function() {
+            // Generate a random booking reference
+            const bookingRef = 'CR-' + Math.floor(10000 + Math.random() * 90000);
+            document.getElementById('bookingReference').textContent = bookingRef;
+            
+            // Hide booking modal and show success modal
+            $('#bookingModal').modal('hide');
+            $('#successModal').modal('show');
+        });
+        
+        // Handle search form submission
+        document.getElementById('carSearchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // In a real application, this would filter the cars based on search criteria
+            alert('Search functionality would filter cars based on your criteria');
+        });
+        
+        // Handle load more button
+        document.getElementById('loadMoreCars').addEventListener('click', function() {
+            alert('In a real application, this would load more cars from the database');
+        });
+    });
+</script>
+{% endblock %}

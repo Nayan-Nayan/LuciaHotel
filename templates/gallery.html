@@ -1,0 +1,65 @@
+{% extends 'allinclude.html' %}
+{% load static %}
+
+{% block title %}Gallery - Lucia Hotel & Resort{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Our Gallery</h2>
+    <div class="row g-4">
+        <!-- Room Photos -->
+        <div class="col-12">
+            <h4 class="mb-3">Rooms</h4>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <img src="{% static 'Allfiles/Photo/room-1.jpg' %}" class="card-img-top" alt="Luxury Suite">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <img src="{% static 'Allfiles/Photo/room-2.jpg' %}" class="card-img-top" alt="Deluxe Room">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <img src="{% static 'Allfiles/Photo/room-3.jpg' %}" class="card-img-top" alt="Family Room">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <img src="{% static 'Allfiles/Photo/room-4.jpg' %}" class="card-img-top" alt="Single Room">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <img src="{% static 'Allfiles/Photo/room-5.jpg' %}" class="card-img-top" alt="Presidential Suite">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <img src="{% static 'Allfiles/Photo/room-6.jpg' %}" class="card-img-top" alt="Double Room">
+            </div>
+        </div>
+        <!-- Hotel Tour Photos -->
+        <div class="col-12 mt-4">
+            <h4 class="mb-3">Hotel & Place Tour</h4>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <img src="{% static 'Allfiles/Photo/gallery-1.jpg' %}" class="card-img-top" alt="Infinity Pool">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <img src="{% static 'Allfiles/Photo/gallery-2.jpg' %}" class="card-img-top" alt="Fine Dining Restaurant">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <img src="{% static 'Allfiles/Photo/gallery-3.jpg' %}" class="card-img-top" alt="Hotel Lobby">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

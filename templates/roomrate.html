@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rooms & Rates</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { 
+            padding: 20px; 
+            font-family: 'Arial', sans-serif;
+        }
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{% static "Allfiles/Photo/slider-5.jpg" %}') no-repeat center center;
+            background-size: cover;
+            color: white;
+            margin-bottom: 30px;
+        }
+        .room-card {
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .room-card:hover {
+            transform: translateY(-5px);
+        }
+        .gallery-img {
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        .rate-box {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .seasonal-box {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .amenities-table th {
+            background-color: #343a40;
+            color: white;
+        }
+        .room-detail-img {
+            height: 300px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .room-features {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Our Rooms & Rates</h1>
+            <p class="lead">Experience luxury and comfort at affordable prices</p>
+        </div>
+        
+        <!-- Room Types Section -->
+        <h2 class="text-center mb-4">Room Types</h2>
+        <div class="row">
+            <!-- Deluxe Room -->
+            <div class="col-md-4">
+                <div class="card room-card">
+                    <img src="{% static 'Allfiles/Photo/room-1.jpg' %}" class="card-img-top" alt="Deluxe Room" onerror="this.src='https://via.placeholder.com/300x200?text=Deluxe+Room'">
+                    <div class="card-body">
+                        <h5 class="card-title">Deluxe Room</h5>
+                        <p class="card-text">Spacious room with king-size bed, private balcony, and premium amenities.</p>
+                        <p class="text-primary fw-bold">$150 per night</p>
+                        <a href="{% url 'OnlineBooking' %}?room_type=Deluxe Room&price=150" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Executive Suite -->
+            <div class="col-md-4">
+                <div class="card room-card">
+                    <img src="{% static 'Allfiles/Photo/room-5.jpg' %}" class="card-img-top" alt="Executive Suite" onerror="this.src='https://via.placeholder.com/300x200?text=Executive+Suite'">
+                    <div class="card-body">
+                        <h5 class="card-title">Executive Suite</h5>
+                        <p class="card-text">Luxury suite with separate living area, jacuzzi, and panoramic views.</p>
+                        <p class="text-primary fw-bold">$250 per night</p>
+                        <a href="{% url 'OnlineBooking' %}?room_type=Executive Suite&price=250" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Standard Room -->
+            <div class="col-md-4">
+                <div class="card room-card">
+                    <img src="{% static 'Allfiles/Photo/room-3.jpg' %}" class="card-img-top" alt="Standard Room" onerror="this.src='https://via.placeholder.com/300x200?text=Standard+Room'">
+                    <div class="card-body">
+                        <h5 class="card-title">Standard Room</h5>
+                        <p class="card-text">Comfortable room with queen-size bed, work desk, and essential amenities.</p>
+                        <p class="text-primary fw-bold">$100 per night</p>
+                        <a href="{% url 'OnlineBooking' %}?room_type=Standard Room&price=100" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Detailed Room Images Section (New) -->
+        <h2 class="text-center mb-4 mt-5">Explore Our Rooms</h2>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <img src="{% static 'Allfiles/Photo/room-1.jpg' %}" class="img-fluid room-detail-img" alt="Luxury Room" onerror="this.src='https://via.placeholder.com/600x400?text=Luxury+Room'">
+                <h4>Luxury Rooms</h4>
+                <p>Our luxury rooms offer the perfect blend of comfort and elegance. Each room features premium bedding, modern amenities, and stunning views.</p>
+                <div class="room-features">
+                    <span class="badge bg-primary me-2">King Bed</span>
+                    <span class="badge bg-primary me-2">Ocean View</span>
+                    <span class="badge bg-primary me-2">Mini Bar</span>
+                    <span class="badge bg-primary">Room Service</span>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <img src="{% static 'Allfiles/Photo/room-2.jpg' %}" class="img-fluid room-detail-img" alt="Dining Experience" onerror="this.src='https://via.placeholder.com/600x400?text=Dining+Experience'">
+                <h4>Dining Experience</h4>
+                <p>Enjoy our in-room dining experience with a selection of gourmet meals prepared by our expert chefs. Perfect for a romantic dinner or a quiet evening.</p>
+                <div class="room-features">
+                    <span class="badge bg-primary me-2">24/7 Service</span>
+                    <span class="badge bg-primary me-2">Gourmet Menu</span>
+                    <span class="badge bg-primary me-2">Wine Selection</span>
+                    <span class="badge bg-primary">Private Dining</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <img src="{% static 'Allfiles/Photo/room-3.jpg' %}" class="img-fluid room-detail-img" alt="Facilities" onerror="this.src='https://via.placeholder.com/600x400?text=Facilities'">
+                <h4>Room Facilities</h4>
+                <p>All our rooms come with modern facilities to ensure your stay is comfortable and convenient. From high-speed WiFi to premium toiletries, we've got you covered.</p>
+                <div class="room-features">
+                    <span class="badge bg-primary me-2">High-Speed WiFi</span>
+                    <span class="badge bg-primary me-2">Smart TV</span>
+                    <span class="badge bg-primary me-2">Coffee Maker</span>
+                    <span class="badge bg-primary">Safe</span>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <img src="{% static 'Allfiles/Photo/gallery-1.jpg' %}" class="img-fluid room-detail-img" alt="Infinity Pool" onerror="this.src='https://via.placeholder.com/600x400?text=Infinity+Pool'">
+                <h4>Hotel Amenities</h4>
+                <p>Enjoy our world-class amenities including an infinity pool, spa, fitness center, and more. Perfect for relaxation and rejuvenation during your stay.</p>
+                <div class="room-features">
+                    <span class="badge bg-primary me-2">Infinity Pool</span>
+                    <span class="badge bg-primary me-2">Spa</span>
+                    <span class="badge bg-primary me-2">Fitness Center</span>
+                    <span class="badge bg-primary">Concierge</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Gallery Section -->
+        <h2 class="text-center mb-4 mt-5">Room Gallery</h2>
+        <div class="row">
+            <div class="col-md-3">
+                <img src="{% static 'Allfiles/Photo/room-2.jpg' %}" class="img-fluid gallery-img" alt="Room Image 1" onerror="this.src='https://via.placeholder.com/300x200?text=Room+Image'">
+            </div>
+            <div class="col-md-3">
+                <img src="{% static 'Allfiles/Photo/room-4.jpg' %}" class="img-fluid gallery-img" alt="Room Image 2" onerror="this.src='https://via.placeholder.com/300x200?text=Room+Image'">
+            </div>
+            <div class="col-md-3">
+                <img src="{% static 'Allfiles/Photo/room-6.jpg' %}" class="img-fluid gallery-img" alt="Room Image 3" onerror="this.src='https://via.placeholder.com/300x200?text=Room+Image'">
+            </div>
+            <div class="col-md-3">
+                <img src="{% static 'Allfiles/Photo/gallery-2.jpg' %}" class="img-fluid gallery-img" alt="Room Image 4" onerror="this.src='https://via.placeholder.com/300x200?text=Room+Image'">
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-3">
+                <img src="{% static 'Allfiles/Photo/gallery-3.jpg' %}" class="img-fluid gallery-img" alt="Room Image 5" onerror="this.src='https://via.placeholder.com/300x200?text=Room+Image'">
+            </div>
+            <div class="col-md-3">
+                <img src="{% static 'Allfiles/Photo/room-1.jpg' %}" class="img-fluid gallery-img" alt="Room Image 6" onerror="this.src='https://via.placeholder.com/300x200?text=Room+Image'">
+            </div>
+            <div class="col-md-3">
+                <img src="{% static 'Allfiles/Photo/room-5.jpg' %}" class="img-fluid gallery-img" alt="Room Image 7" onerror="this.src='https://via.placeholder.com/300x200?text=Room+Image'">
+            </div>
+            <div class="col-md-3">
+                <img src="{% static 'Allfiles/Photo/room-3.jpg' %}" class="img-fluid gallery-img" alt="Room Image 8" onerror="this.src='https://via.placeholder.com/300x200?text=Room+Image'">
+            </div>
+        </div>
+        
+        <!-- Rate Breakdown -->
+        <h2 class="text-center mb-4 mt-5">Rate Breakdown</h2>
+        <div class="rate-box">
+            <h4>Base Rate Includes:</h4>
+            <ul>
+                <li>Accommodation for 2 adults</li>
+                <li>Complimentary breakfast</li>
+                <li>Free Wi-Fi</li>
+                <li>Access to fitness center</li>
+                <li>Welcome drink on arrival</li>
+            </ul>
+            
+            <h4 class="mt-4">Additional Charges:</h4>
+            <ul>
+                <li>Extra adult: $30 per night</li>
+                <li>Children (6-12 years): $15 per night</li>
+                <li>Airport transfer: $50 one way</li>
+                <li>Late check-out (until 6 PM): 50% of room rate</li>
+            </ul>
+        </div>
+        
+        <!-- Seasonal Pricing -->
+        <h2 class="text-center mb-4">Seasonal Pricing</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="seasonal-box">
+                    <h4>Peak Season (Dec-Feb)</h4>
+                    <p>Standard rates apply plus 20% seasonal surcharge</p>
+                    <p class="text-danger">Limited availability - Book early!</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="seasonal-box">
+                    <h4>Special Offers</h4>
+                    <p>Stay 3 nights, get 15% off</p>
+                    <p>Stay 5+ nights, get 25% off</p>
+                    <p class="text-success">Use code: STAYLONG</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="seasonal-box">
+                    <h4>Off-Peak (Jun-Aug)</h4>
+                    <p>Enjoy 10% discount on all room types</p>
+                    <p class="text-primary">Best value for money!</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Amenities Table -->
+        <h2 class="text-center mb-4 mt-5">Amenities Comparison</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered amenities-table">
+                <thead>
+                    <tr>
+                        <th>Amenities</th>
+                        <th>Standard Room</th>
+                        <th>Deluxe Room</th>
+                        <th>Executive Suite</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Room Size</td>
+                        <td>25 m²</td>
+                        <td>35 m²</td>
+                        <td>50 m²</td>
+                    </tr>
+                    <tr>
+                        <td>Bed Type</td>
+                        <td>Queen</td>
+                        <td>King</td>
+                        <td>King + Sofa Bed</td>
+                    </tr>
+                    <tr>
+                        <td>Balcony/Terrace</td>
+                        <td>No</td>
+                        <td>Yes</td>
+                        <td>Yes (Private)</td>
+                    </tr>
+                    <tr>
+                        <td>Bathtub</td>
+                        <td>No</td>
+                        <td>Yes</td>
+                        <td>Yes (Jacuzzi)</td>
+                    </tr>
+                    <tr>
+                        <td>Mini Bar</td>
+                        <td>No</td>
+                        <td>Yes</td>
+                        <td>Yes (Premium)</td>
+                    </tr>
+                    <tr>
+                        <td>Room Service</td>
+                        <td>Limited Hours</td>
+                        <td>24 Hours</td>
+                        <td>24 Hours (Priority)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
